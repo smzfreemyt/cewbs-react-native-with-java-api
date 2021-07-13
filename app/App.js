@@ -1,6 +1,7 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
-import Navigation from './components/Navigation';
+import {NavigationContainer} from '@react-navigation/native';
+import HomeWrapper from './screens/Home/HomeWrapper';
 import colors from './utils/colors';
 
 const theme = {
@@ -17,7 +18,9 @@ const theme = {
 const App = () => {
   return (
     <PaperProvider theme={theme}>
-      <Navigation />
+      <NavigationContainer>
+        <HomeWrapper />
+      </NavigationContainer>
     </PaperProvider>
   );
 };
