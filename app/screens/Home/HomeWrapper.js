@@ -28,7 +28,7 @@ const HomeWrapper = () => {
         name="Partner Companies"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Partner Companies',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="brain" color={color} size={26} />
           ),
@@ -38,7 +38,7 @@ const HomeWrapper = () => {
         name="Profile"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
