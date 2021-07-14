@@ -27,7 +27,6 @@ const GoogleAuth = () => {
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(user => {
             if (user) {
-                console.log('user'+ JSON.stringify(user));
                 dispatch(
                     login({
                         email: user.email,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import {error, login} from '../../../stores/slices/authSlice';
 import _auth from '../../../api/authService';
 import {Colors} from 'react-native-paper';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import auth from '@react-native-firebase/auth';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -20,6 +21,21 @@ const Login = ({toggleSignup}) => {
   const [email, setEmail] = useState('user@user.com');
   const [password, setPassword] = useState('test123');
   const [btnSignInDisabled, setBtnSignInDisabled] = useState(false);
+  const [uid, setUid] = useState('');
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(user => {
+        if (user) {
+            dispatch(
+                login({
+                    email: user.email,
+                    uid: user.uid
+                })
+            )
+        }
+    });
+    return subscriber;
+  }, [uid]);
 
   const loginHandler = async () => {
     if (email === '' || password === '') {
@@ -30,18 +46,15 @@ const Login = ({toggleSignup}) => {
         const data = await _auth.signInUsingEmailPassword(email, password);
         if (data) {
           const user = data.user;
-          dispatch(
-            login({
-              email: user.email,
-              uid: user.uid,
-            }),
-          );
+          setEmail(user.email);
+          setUid(user.uid);
         } else {
           dispatch(error('There is problem in signing in!'));
         }
-        setBtnSignInDisabled(false);
       } catch (e) {
         console.log('error'+ e);
+      } finally {
+        setBtnSignInDisabled(false);
       }
     }
   };
