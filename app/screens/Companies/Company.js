@@ -1,5 +1,11 @@
-import React from 'react';
-import { Text, View, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import {
+    Text,
+    View,
+    StyleSheet,
+    SafeAreaView,
+    FlatList
+} from 'react-native';
 import TopBar from '../../components/TopBar';
 
 const DATA = [
@@ -61,7 +67,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         marginBottom: 20,
         width: '50%',
-        marginRight: 20
+        marginRight: 20,
+        minHeight: 50
     },
 });
 
