@@ -5,10 +5,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../stores/slices/authSlice';
 
 const Tab = createMaterialBottomTabNavigator();
 
 const HomeWrapper = () => {
+  const dispatch = useDispatch();
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -26,10 +29,10 @@ const HomeWrapper = () => {
         }}
       />
       <Tab.Screen
-        name="Partner Companies"
+        name="Companies"
         component={Company}
         options={{
-          tabBarLabel: 'Partner Companies',
+          tabBarLabel: 'Partners',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons name="brain" color={color} size={26} />
           ),
@@ -44,6 +47,22 @@ const HomeWrapper = () => {
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
+      />
+      <Tab.Screen
+        name="Logout"
+        component={Home}
+        options={{
+          tabBarLabel: 'Logout',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="logout" color={color} size={26} />
+          ),
+        }}
+        listeners={() => ({
+          tabPress: (e) => {
+              e.preventDefault();
+              dispatch(logout());
+          }
+        })}
       />
     </Tab.Navigator>
   );
