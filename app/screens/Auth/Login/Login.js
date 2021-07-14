@@ -43,7 +43,7 @@ const Login = ({toggleSignup}) => {
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
         style={styles.image}
       />
-      <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM Dw</Text>
+      <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM</Text>
 
       <Text style={styles.label}>Email</Text>
       <TextInput
