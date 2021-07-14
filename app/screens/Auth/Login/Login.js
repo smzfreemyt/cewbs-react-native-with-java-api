@@ -16,8 +16,8 @@ const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(state => state.auth.errorMessage);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user@user.com');
+  const [password, setPassword] = useState('test123');
 
   const loginHandler = async () => {
     if (email === '' || password === '') {
@@ -43,7 +43,7 @@ const Login = ({toggleSignup}) => {
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
         style={styles.image}
       />
-      <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM</Text>
+      <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM Dw</Text>
 
       <Text style={styles.label}>Email</Text>
       <TextInput
