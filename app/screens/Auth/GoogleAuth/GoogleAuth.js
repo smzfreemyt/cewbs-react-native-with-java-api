@@ -1,45 +1,44 @@
-import React, { useDis} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import {
     Text,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import { signInWithGoogle } from '../../../api/googleAuthService';
 import { login, error } from '../../../stores/slices/authSlice';
 
-// be in .env
-GoogleSignin.configure({
-  webClientId: '657350341721-bgkgnc8v0lvau9dml8kmq4ovuqpkbu8j.apps.googleusercontent.com',
-});
-
-const onGoogleButtonPress = async ()  => {
-    try {
-        const { idToken } = await GoogleSignin.signIn();
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        const result = auth().signInWithCredential(googleCredential);
-        return result;
-    } catch(e){
-        console.log('error' + e);
-    }
-}
 
 const GoogleAuth = () => {
     const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [name, setName]   = useState('');
+
+    const onGoogleButtonPress = ()  => {
+        signInWithGoogle()
+        .then(response => {
+            const profile = response.additionalUserInfo.profile;
+            setEmail(profile.email);
+            setName(profile.name);
+        });
+    }
+
+    useEffect(() => {
+        if (email && name) {
+            dispatch(
+                login({
+                    email: email,
+                    name: name
+                })
+            )
+            console.log('logged');
+        }
+    }, [email, name]);
+    
+
     return (
         <TouchableOpacity
-            onPress={() => {
-                onGoogleButtonPress().then(response => {
-                    const profile = response.additionalUserInfo.profile;
-                    dispatch(
-                        login({
-                            email: profile.email,
-                            name: profile.name
-                        })
-                    )
-                });
-            }}
+            onPress={onGoogleButtonPress}
         >
             <Text style={styles.button}>
                 Sign In with Google daw
