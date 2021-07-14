@@ -1,12 +1,11 @@
 import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {Avatar, Colors} from 'react-native-paper';
 import colors from '../../../utils/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from 'moment';
 
 const PostItem = props => {
-  console.log('tex', props.children);
   return (
     <View style={styles.container}>
       <View style={styles.postHeader}>
@@ -25,7 +24,11 @@ const PostItem = props => {
           <Text>{props.category}</Text>
         </View>
       </View>
-      <ScrollView style={styles.contentContainer}>{props.children}</ScrollView>
+      <View style={styles.contentContainer}>
+        {React.Children.map(props.children, d => {
+          return d ? d.props.children : null;
+        })}
+      </View>
     </View>
   );
 };
@@ -66,7 +69,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexDirection: 'row',
-    width: 100,
+    width: Dimensions.get('window').width - 60,
+    flexWrap: 'wrap',
   },
   content: {
     flexShrink: 1,
