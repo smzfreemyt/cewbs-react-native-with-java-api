@@ -41,7 +41,7 @@ const GoogleAuth = () => {
             onPress={onGoogleButtonPress}
         >
             <Text style={styles.button}>
-                Sign In with Google daw
+                Sign In with Google
             </Text>
         </TouchableOpacity>
     )
