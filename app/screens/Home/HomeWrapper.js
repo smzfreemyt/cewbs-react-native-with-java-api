@@ -5,8 +5,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../stores/slices/authSlice';
+import {useDispatch} from 'react-redux';
+import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -59,12 +59,14 @@ const HomeWrapper = () => {
           ),
         }}
         listeners={() => ({
-          tabPress: (e) => {
-              e.preventDefault();
-              auth().signOut().then(() => {
+          tabPress: e => {
+            e.preventDefault();
+            auth()
+              .signOut()
+              .then(() => {
                 dispatch(logout());
-              })
-          }
+              });
+          },
         })}
       />
     </Tab.Navigator>

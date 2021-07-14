@@ -7,18 +7,27 @@ const postSlice = createSlice({
     initializing: false,
     posts: [],
     category: 'all',
-    filterPost: [],
+    filterPosts: [],
   },
   reducers: {
-    setPosts: (state, action) => {
+    setPost: (state, action) => {
       state.posts = [...action.payload];
     },
     setCategory: (state, action) => {
       state.category = action.payload;
     },
+    filterPost: (state, action) => {
+      if (action.payload === 'all') {
+        state.filterPosts = state.posts;
+      } else {
+        state.filterPosts = state.posts.filter(
+          post => post.category === action.payload,
+        );
+      }
+    },
   },
 });
 
-export const {setPosts, setCategory} = postSlice.actions;
+export const {setPost, setCategory, filterPost} = postSlice.actions;
 
 export default postSlice.reducer;
