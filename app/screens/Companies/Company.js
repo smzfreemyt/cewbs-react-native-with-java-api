@@ -36,10 +36,11 @@ const renderItem = ({ item }) => {
 };
 
 const Company = () => {
+    console.log('company');
     return (
         <SafeAreaView>
             <TopBar />
-            <Text style={styles.heading}>Companies</Text>
+            <Text style={styles.heading}>Company Partners</Text>
             <View  style={styles.container}>
                 <FlatList 
                     data={DATA}
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontSize: 25,
+        fontWeight: 'bold',
         textAlign: 'center',
         paddingTop: 15,
         paddingBottom: 20,

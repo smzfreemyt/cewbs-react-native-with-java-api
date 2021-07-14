@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {error, login} from '../../../stores/slices/authSlice';
 import _auth from '../../../api/authService';
 import {Colors} from 'react-native-paper';
+import GoogleAuth from '../GoogleAuth/GoogleAuth';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -70,6 +71,9 @@ const Login = ({toggleSignup}) => {
       <TouchableOpacity onPress={toggleSignup}>
         <Text style={[styles.detail, styles.register]}>Register</Text>
       </TouchableOpacity>
+
+      <GoogleAuth />
+
     </View>
   );
 };
@@ -97,7 +101,6 @@ const styles = StyleSheet.create({
     height: 35,
     alignSelf: 'center',
     justifyContent: 'center',
-    marginTop: 30,
     marginBottom: 10,
   },
   title: {
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 15,
-    marginBottom: '20%',
+    marginBottom: 30
   },
   label: {
     width: '90%',
@@ -126,6 +129,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     marginBottom: 20,
+    paddingLeft: 5
   },
   error: {
     color: Colors.red300,
