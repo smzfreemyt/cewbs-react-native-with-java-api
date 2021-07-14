@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
+import Profile from '../Profile/Profile';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const HomeWrapper = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
