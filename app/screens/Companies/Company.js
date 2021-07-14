@@ -36,6 +36,7 @@ const renderItem = ({ item }) => {
 };
 
 const Company = () => {
+    console.log('company');
     return (
         <SafeAreaView>
             <TopBar />
