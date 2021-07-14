@@ -1,8 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import PostItem from './PostItem';
+import {useDispatch, useSelector} from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
 
 const Posts = () => {
+  const category = useSelector(state => state.post.category);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = firestore().collection('post');
+        const data = await response.get();
+        data.docs.forEach(item => {
+          console.log(item.date());
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }, []);
+
   return (
     <View style={styles.postContainer}>
       <PostItem title="Mind Nation">

@@ -1,10 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import colors from '../../../utils/colors';
+import {useDispatch, useSelector} from 'react-redux';
+import {setCategory} from '../../../stores/slices/postSlice';
 
 const FilterItem = ({category}) => {
+  const dispatch = useDispatch();
+
+  const onClickCategoryHandler = () => {
+    dispatch(setCategory(category));
+  };
+
   return (
-    <TouchableOpacity onPress={() => {}} style={styles.item}>
+    <TouchableOpacity onPress={onClickCategoryHandler} style={styles.item}>
       <Text style={styles.filterText}>{category}</Text>
     </TouchableOpacity>
   );
