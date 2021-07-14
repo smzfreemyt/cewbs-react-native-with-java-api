@@ -4,6 +4,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from './Home';
 import colors from '../../utils/colors';
+import Company from '../Companies/Company';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -26,7 +27,7 @@ const HomeWrapper = () => {
       />
       <Tab.Screen
         name="Partner Companies"
-        component={Home}
+        component={Company}
         options={{
           tabBarLabel: 'Partner Companies',
           tabBarIcon: ({color}) => (
