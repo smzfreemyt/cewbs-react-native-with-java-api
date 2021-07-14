@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { signInWithGoogle } from '../../../api/googleAuthService';
 import { login, error } from '../../../stores/slices/authSlice';
+import auth from '@react-native-firebase/auth';
 
 
 const GoogleAuth = () => {
@@ -24,15 +25,18 @@ const GoogleAuth = () => {
     }
 
     useEffect(() => {
-        if (email && name) {
-            dispatch(
-                login({
-                    email: email,
-                    name: name
-                })
-            )
-            console.log('logged');
-        }
+        const subscriber = auth().onAuthStateChanged(user => {
+            if (user) {
+                console.log('user'+ JSON.stringify(user));
+                dispatch(
+                    login({
+                        email: user.email,
+                        name: user.name
+                    })
+                )
+            }
+        });
+        return subscriber;
     }, [email, name]);
     
 

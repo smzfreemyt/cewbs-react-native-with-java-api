@@ -19,21 +19,29 @@ const Login = ({toggleSignup}) => {
 
   const [email, setEmail] = useState('user@user.com');
   const [password, setPassword] = useState('test123');
+  const [btnSignInDisabled, setBtnSignInDisabled] = useState(false);
 
   const loginHandler = async () => {
     if (email === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
-      const user = await _auth.signInUsingEmailPassword(email, password);
-      if (user) {
-        dispatch(
-          login({
-            email: user.email,
-            uid: user.uid,
-          }),
-        );
-      } else {
-        dispatch(error('There is problem in signing in!'));
+      try {
+        setBtnSignInDisabled(true);
+        const data = await _auth.signInUsingEmailPassword(email, password);
+        if (data) {
+          const user = data.user;
+          dispatch(
+            login({
+              email: user.email,
+              uid: user.uid,
+            }),
+          );
+        } else {
+          dispatch(error('There is problem in signing in!'));
+        }
+        setBtnSignInDisabled(false);
+      } catch (e) {
+        console.log('error'+ e);
       }
     }
   };
@@ -64,8 +72,14 @@ const Login = ({toggleSignup}) => {
       />
       <Text style={styles.error}>{errorMessage}</Text>
 
-      <TouchableOpacity style={styles.signInButton} onPress={loginHandler}>
-        <Text style={styles.signIn}>Sign In</Text>
+      <TouchableOpacity
+        style={styles.signInButton}
+        onPress={loginHandler}
+        disabled={btnSignInDisabled}
+      >
+        <Text style={styles.signIn}>
+          { (!btnSignInDisabled) ? 'Sign In' : 'Please wait...'}
+        </Text>
       </TouchableOpacity>
       <Text style={styles.detail}>Don't have an account yet?</Text>
       <TouchableOpacity onPress={toggleSignup}>
@@ -97,11 +111,14 @@ const styles = StyleSheet.create({
   },
   signInButton: {
     backgroundColor: '#FFFF00',
-    width: '30%',
-    height: 35,
+    paddingHorizontal: 25,
+    paddingVertical: 7,
     alignSelf: 'center',
     justifyContent: 'center',
     marginBottom: 10,
+  },
+  btnDisabled: {
+    backgroundColor: '#888'
   },
   title: {
     alignSelf: 'center',
