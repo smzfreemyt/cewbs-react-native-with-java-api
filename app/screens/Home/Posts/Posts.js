@@ -1,50 +1,76 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import PostItem from './PostItem';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
+import getRNDraftJSBlocks from 'react-native-draftjs-render';
+import {uid} from 'uid';
+import {setPost, filterPost} from '../../../stores/slices/postSlice';
 
 const Posts = () => {
+  const dispatch = useDispatch();
   const category = useSelector(state => state.post.category);
+  const filterPosts = useSelector(state => state.post.filterPosts);
 
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const response = firestore().collection('post');
-        const data = await response.get();
-        data.docs.forEach(item => {
-          console.log(item.date());
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-  }, []);
+    const subscriber = firestore()
+      .collection('posts')
+      .onSnapshot(documentSnapshot => {
+        let postData = documentSnapshot.docs.map(data => data.data());
+        dispatch(setPost(postData));
+        dispatch(filterPost(category));
+      });
+    return subscriber;
+  }, [category, dispatch]);
 
   return (
     <View style={styles.postContainer}>
-      <PostItem title="Mind Nation">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-        consequuntur praesentium quidem numquam, adipisci itaque, veritatis
-        corporis in odio quas id et, voluptas repellendus. Impedit suscipit non
-        accusamus id at.
-      </PostItem>
-      <PostItem title="Maxicare">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo error
-        dicta veritatis vitae laudantium? Mollitia quis natus eaque in adipisci
-        minima molestiae unde atque! Deserunt consequuntur dicta unde. Voluptas,
-        quis?
-      </PostItem>
-      <PostItem title="Game event">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos laborum
-        error velit. Sequi omnis rem esse nisi inventore, labore quis sed culpa
-        libero eveniet praesentium officiis illo a, laborum consectetur.
-      </PostItem>
+      {filterPosts.map(post => (
+        <PostItem
+          key={uid()}
+          title={post.title}
+          date={new Date(post.created_at)}
+          category={post.category}>
+          {getRNDraftJSBlocks({
+            contentState: post.body,
+            customStyles: renderStyles,
+            atomicHandler,
+          })}
+        </PostItem>
+      ))}
     </View>
   );
 };
 
 export default Posts;
+const renderStyles = StyleSheet.flatten({
+  unstyled: {
+    flexShrink: 1,
+  },
+});
+
+const atomicHandler = (item, entityMap) => {
+  switch (item.data.type) {
+    case 'image':
+      return (
+        <View key={item.key} style={{flex: 1}}>
+          <Image
+            style={{width: 288, height: 161}}
+            source={{uri: item.data.uri}}
+          />
+        </View>
+      );
+    case 'atomic':
+      console.log('data', item.data);
+      return (
+        <View key={item.key} style={{flex: 1}}>
+          <Text>hi</Text>
+        </View>
+      );
+    default:
+      return null;
+  }
+};
 
 const styles = StyleSheet.create({
   postContainer: {
