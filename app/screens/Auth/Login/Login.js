@@ -12,6 +12,7 @@ import {error, login} from '../../../stores/slices/authSlice';
 import _auth from '../../../api/authService';
 import {Colors} from 'react-native-paper';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import Loading from '../../../components/Loading';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -19,12 +20,15 @@ const Login = ({toggleSignup}) => {
 
   const [email, setEmail] = useState('user@user.com');
   const [password, setPassword] = useState('test123');
+  const [loading, setLoading] = useState(false);
 
   const loginHandler = async () => {
     if (email === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
+      setLoading(true);
       const user = await _auth.signInUsingEmailPassword(email, password);
+      setLoading(false);
       if (user) {
         dispatch(
           login({
@@ -38,7 +42,9 @@ const Login = ({toggleSignup}) => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <View style={styles.mainView}>
       <Image
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}

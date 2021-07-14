@@ -10,6 +10,7 @@ import {
 import {Colors} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import _auth from '../../../api/authService';
+import Loading from '../../../components/Loading';
 import {error, login} from '../../../stores/slices/authSlice';
 
 const SignUp = ({toggleLogin}) => {
@@ -17,6 +18,7 @@ const SignUp = ({toggleLogin}) => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const errorMessage = useSelector(state => state.auth.errorMessage);
 
   const registerHandler = async () => {
@@ -37,7 +39,9 @@ const SignUp = ({toggleLogin}) => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <View style={styles.mainView}>
       <Image
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
