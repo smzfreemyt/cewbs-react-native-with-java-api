@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import PostItem from './PostItem';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -60,20 +60,16 @@ const atomicHandler = (item, entityMap) => {
   //       </View>
   //     );
   // }
-  switch (item.data.type) {
-    case 'image':
+  switch (entityMap[item.entityRanges[0].key.toString()].type) {
+    case 'IMAGE':
       return (
         <View key={item.key} style={{flex: 1}}>
           <Image
-            style={{width: 288, height: 161}}
-            source={{uri: item.data.uri}}
+            style={{width: Dimensions.get('window').width - 50, height: 161}}
+            source={{
+              uri: entityMap[item.entityRanges[0].key.toString()].data.src,
+            }}
           />
-        </View>
-      );
-    case 'atomic':
-      return (
-        <View key={item.key} style={{flex: 1}}>
-          <Text>hi</Text>
         </View>
       );
     default:
