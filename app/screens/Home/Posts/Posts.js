@@ -11,7 +11,6 @@ const Posts = () => {
   const dispatch = useDispatch();
   const category = useSelector(state => state.post.category);
   const filterPosts = useSelector(state => state.post.filterPosts);
-
   useEffect(() => {
     const subscriber = firestore()
       .collection('posts')
@@ -45,11 +44,22 @@ const Posts = () => {
 export default Posts;
 const renderStyles = StyleSheet.flatten({
   unstyled: {
-    flexShrink: 1,
+    textAlign: 'left',
   },
 });
 
 const atomicHandler = (item, entityMap) => {
+  // switch (entityMap['0']) {
+  //   case 'IMAGE':
+  //     return (
+  //       <View key={item.key} style={{flex: 1}}>
+  //         <Image
+  //           style={{width: 288, height: 161}}
+  //           source={{uri: entityMap[count.toString()].data.src}}
+  //         />
+  //       </View>
+  //     );
+  // }
   switch (item.data.type) {
     case 'image':
       return (
@@ -61,7 +71,6 @@ const atomicHandler = (item, entityMap) => {
         </View>
       );
     case 'atomic':
-      console.log('data', item.data);
       return (
         <View key={item.key} style={{flex: 1}}>
           <Text>hi</Text>
