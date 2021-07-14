@@ -49,17 +49,6 @@ const renderStyles = StyleSheet.flatten({
 });
 
 const atomicHandler = (item, entityMap) => {
-  // switch (entityMap['0']) {
-  //   case 'IMAGE':
-  //     return (
-  //       <View key={item.key} style={{flex: 1}}>
-  //         <Image
-  //           style={{width: 288, height: 161}}
-  //           source={{uri: entityMap[count.toString()].data.src}}
-  //         />
-  //       </View>
-  //     );
-  // }
   switch (entityMap[item.entityRanges[0].key.toString()].type) {
     case 'IMAGE':
       return (

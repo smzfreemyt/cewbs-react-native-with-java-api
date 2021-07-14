@@ -14,6 +14,7 @@ import {Colors} from 'react-native-paper';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import Loading from '../../../components/Loading';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Login = ({toggleSignup}) => {
   const [password, setPassword] = useState('test123');
   const [btnSignInDisabled, setBtnSignInDisabled] = useState(false);
   const [uid, setUid] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
@@ -52,7 +54,9 @@ const Login = ({toggleSignup}) => {
     } else {
       try {
         setBtnSignInDisabled(true);
+        setLoading(true);
         const data = await _auth.signInUsingEmailPassword(email, password);
+        setLoading(false);
         if (data) {
           const user = data.user;
           setEmail(user.email);
@@ -68,7 +72,9 @@ const Login = ({toggleSignup}) => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <View style={styles.mainView}>
       <Image
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
