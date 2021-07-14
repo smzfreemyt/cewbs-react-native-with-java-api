@@ -16,8 +16,8 @@ const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
   const errorMessage = useSelector(state => state.auth.errorMessage);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user@user.com');
+  const [password, setPassword] = useState('test123');
 
   const loginHandler = async () => {
     if (email === '' || password === '') {
