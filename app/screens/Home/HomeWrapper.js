@@ -8,6 +8,7 @@ import Company from '../Companies/Company';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
+import Profile from '../Profile/Profile';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -41,7 +42,7 @@ const HomeWrapper = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
