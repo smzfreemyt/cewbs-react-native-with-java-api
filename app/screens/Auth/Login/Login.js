@@ -73,7 +73,6 @@ const Login = ({toggleSignup}) => {
       </TouchableOpacity>
 
       <GoogleAuth />
-
     </View>
   );
 };
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 15,
-    marginBottom: 30
+    marginBottom: 30,
   },
   label: {
     width: '90%',
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     marginBottom: 20,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   error: {
     color: Colors.red300,

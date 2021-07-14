@@ -1,24 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import FilterItem from './FilterItem';
+import firestore from '@react-native-firebase/firestore';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Filters = () => {
-  const data = [
-    {key: '1', data: 'All'},
-    {key: '2', data: 'Events'},
-    {key: '3', data: 'MindNation'},
-    {key: '4', data: 'Maxicare'},
-  ];
+  const dispatch = useDispatch();
+
+  const [cats, setCats] = useState(['all']);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = firestore().collection('categories');
+        const data = await response.get();
+        data.docs.forEach(item => {
+          const catValue = item.data().category_name;
+          setCats(oldCats => [...oldCats, catValue]);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   return (
     <View style={styles.container}>
       <FlatList
         horizontal={true}
-        data={data}
+        data={cats}
         renderItem={({item}) => {
-          return <FilterItem category={item.data} />;
+          return <FilterItem category={item} />;
         }}
-        keyExtractor={(item, index) => index}
+        keyExtractor={(_, index) => index}
       />
     </View>
   );
