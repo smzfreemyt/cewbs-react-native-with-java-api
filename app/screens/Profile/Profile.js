@@ -2,26 +2,17 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, Image, View} from 'react-native';
 import TopBar from '../../components/TopBar';
 import { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import {useSelector} from 'react-redux';
 
 const Profile = () => {
-  const userCollection = firestore().collection('users');
-  const currentUser = firebase.auth().currentUser;
-  const [userName, setUserName] = useState('');
- 
-  const fetchData = async () => {
-    userCollection.doc(currentUser.uid).get()
-      .then(snapshot => setUserName(snapshot.data().name))
-  }
-  fetchData()
+  const user = useSelector(state => state.auth.currentUser);
   
-
   return (
     <View>
       <TopBar />
       <Image source={require('../../assets/default-avatar.png')} style={styles.image} />
-      <Text style={styles.userName}>{userName}</Text>
-      <Text style={styles.userEmail}>{currentUser.email}</Text>
+      <Text style={styles.userName}>{user.name}</Text>
+      <Text style={styles.userEmail}>{user.email}</Text>
     </View>
   );
 };
