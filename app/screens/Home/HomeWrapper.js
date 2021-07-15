@@ -5,10 +5,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
+import Profile from '../Profile/Profile';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
-import Profile from '../Profile/Profile';
 
 const Tab = createMaterialBottomTabNavigator();
 
