@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
+import Profile from '../Profile/Profile';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
@@ -41,7 +42,7 @@ const HomeWrapper = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Home}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
