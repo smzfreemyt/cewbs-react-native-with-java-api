@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "657350341721",
-    "project_id": "employee-well-being-system",
-    "storage_bucket": "employee-well-being-system.appspot.com"
+    "project_number": "398824603559",
+    "project_id": "cewbs-dev",
+    "storage_bucket": "cewbs-dev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:657350341721:android:9da843ea4b8aeb8560ed48",
+        "mobilesdk_app_id": "1:398824603559:android:49dde191ad552bd1fec082",
         "android_client_info": {
           "package_name": "com.centralized_employee_wellbeing_system"
         }
       },
       "oauth_client": [
         {
-          "client_id": "657350341721-bgkgnc8v0lvau9dml8kmq4ovuqpkbu8j.apps.googleusercontent.com",
+          "client_id": "398824603559-6uvpant4868ca8i4v827emb7tnj7q9nf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCMixgly4G1Bqyl8NZGwrDIKHviR3vRVr8"
+          "current_key": "AIzaSyD-hzAP9xjWO2a8iFWnWQ9eEFB_A9bI4Ls"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "657350341721-bgkgnc8v0lvau9dml8kmq4ovuqpkbu8j.apps.googleusercontent.com",
+              "client_id": "398824603559-6uvpant4868ca8i4v827emb7tnj7q9nf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
