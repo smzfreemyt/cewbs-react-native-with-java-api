@@ -14,8 +14,8 @@ const Services = ({navigation, route}) => {
         >
         <View style={styles.companyItem}>
           <Image source={{uri: item.logo}}
-          style={styles.partnerImage}/>
-          <Text style={styles.companyName}>{item.name}</Text>
+          style={styles.serviceImage}/>
+          <Text style={styles.serviceName}>{item.name}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -77,15 +77,17 @@ const styles = StyleSheet.create({
   },
   companyItem: {
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    alignItems: 'center'
   },
-  partnerImage: {
+  serviceImage: {
     width: 100,
     height: 50,
     resizeMode: 'contain'
   },
-  companyName: {
+  serviceName: {
     textAlign: 'center',
+    alignSelf: 'center',
     fontWeight: 'bold'
   }
 });
