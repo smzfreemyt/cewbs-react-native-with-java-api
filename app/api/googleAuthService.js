@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 
 // should be in .env
 GoogleSignin.configure({
-    webClientId: '657350341721-bgkgnc8v0lvau9dml8kmq4ovuqpkbu8j.apps.googleusercontent.com',
+    webClientId: '398824603559-6uvpant4868ca8i4v827emb7tnj7q9nf.apps.googleusercontent.com',
 });
 
   
