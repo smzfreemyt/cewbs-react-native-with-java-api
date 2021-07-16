@@ -22,7 +22,7 @@ const signUpUsingEmailPassword = async (name, email, password) => {
     .createUserWithEmailAndPassword(email, password)
     .then(async data => {
       user = data;
-      await userCollection.doc(user.uid).set({
+      await userCollection.doc(user.user.uid).set({
         name,
         role: 'user',
       });

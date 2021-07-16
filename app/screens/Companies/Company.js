@@ -5,54 +5,31 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
+  Image,
   TouchableOpacity,
 } from 'react-native';
 import TopBar from '../../components/TopBar';
 import firestore from '@react-native-firebase/firestore';
-import {Avatar} from 'react-native-paper';
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item daw',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Fourth Item',
-  },
-];
-
-const renderItem = ({item}, navigate) => {
-  const navigateToServicesHandler = () => {
-    navigate('Services', {
-      uid: item.uid,
-    });
-  };
-  return (
-    <TouchableOpacity
-      style={styles.yellowBox}
-      onPress={navigateToServicesHandler}>
-      <View style={{flex: 1}}>
-        <Avatar.Image
-          size={80}
-          source={{uri: item.data.image}}
-          style={styles.partnerImage}
-        />
-        <Text>{item.data.name}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const Company = ({navigation}) => {
+  const renderItem = ({item}, navigate) => {
+    const navigateToServicesHandler = () => {
+      navigation.navigate('Services', {
+        data: item,
+      });
+    };
+    return (
+      <TouchableOpacity
+        style={styles.yellowBox}
+        onPress={navigateToServicesHandler}>
+        <View style={styles.companyItem}>
+          <Image source={{uri: item.data.image}}
+          style={styles.partnerImage}/>
+          <Text style={styles.companyName}>{item.data.name}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
@@ -103,8 +80,22 @@ const styles = StyleSheet.create({
     minHeight: 50,
     alignItems: 'center',
     justifyContent: 'center',
+    alignContent: 'center',
+    padding: 5
   },
-  partnerImage: {},
+  companyItem: {
+    justifyContent: 'center',
+    alignContent: 'center'
+  },
+  partnerImage: {
+    width: 100,
+    height: 50,
+    resizeMode: 'contain'
+  },
+  companyName: {
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
 });
 
 export default Company;
