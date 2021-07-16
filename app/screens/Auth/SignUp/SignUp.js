@@ -22,6 +22,7 @@ const SignUp = ({toggleLogin}) => {
   const errorMessage = useSelector(state => state.auth.errorMessage);
 
   const registerHandler = async () => {
+    setLoading(true)
     if (email === '' || name === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
@@ -37,8 +38,9 @@ const SignUp = ({toggleLogin}) => {
         dispatch(error('There is problem in signing up!'));
       }
     }
+    setLoading(false)
   };
-
+  
   return loading ? (
     <Loading />
   ) : (
@@ -46,7 +48,7 @@ const SignUp = ({toggleLogin}) => {
       <Image
         source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
         style={styles.image}
-      />
+        />
       <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM</Text>
       <Text style={styles.label}>Full Name</Text>
       <TextInput
