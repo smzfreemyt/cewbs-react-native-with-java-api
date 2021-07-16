@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import PostItem from './PostItem';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -23,7 +23,7 @@ const Posts = () => {
   }, [category, dispatch]);
 
   return (
-    <View style={styles.postContainer}>
+    <ScrollView style={styles.postContainer}>
       {filterPosts.map(post => (
         <PostItem
           key={uid()}
@@ -37,7 +37,7 @@ const Posts = () => {
           })}
         </PostItem>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
