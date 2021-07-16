@@ -5,7 +5,6 @@ import { Button } from 'react-native-paper';
 
 const Services = ({navigation, route}) => {
   const [company, setCompany] = useState(route.params.data);
-  console.log(company.data.services)
   const renderServices = ({item}) => {
     return (
       <TouchableOpacity
