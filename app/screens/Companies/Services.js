@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Linking} from 'react-native';
 import TopBar from '../../components/TopBar';
 import { Button } from 'react-native-paper';
 
@@ -10,6 +10,7 @@ const Services = ({navigation, route}) => {
     return (
       <TouchableOpacity
         style={styles.yellowBox}
+        onPress={ ()=>{ Linking.openURL(item.description)}}
         >
         <View style={styles.companyItem}>
           <Image source={{uri: item.logo}}
