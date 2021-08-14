@@ -12,8 +12,13 @@ import {
 import TopBar from '../../components/TopBar';
 import colors from '../../utils/colors';
 import axios from '../../axios';
+import Loading from '../../components/Loading';
+import NoData from '../../components/NoData';
 
 const Company = ({navigation}) => {
+  const [companies, setCompanies] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const renderItem = ({item}) => {
     const navigateToServicesHandler = () => {
       navigation.navigate('Services', {
@@ -31,7 +36,6 @@ const Company = ({navigation}) => {
       </TouchableOpacity>
     );
   };
-  const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
     axios
@@ -55,12 +59,18 @@ const Company = ({navigation}) => {
       <TopBar />
       <Text style={styles.heading}>Company Partners</Text>
       <View style={styles.container}>
-        <FlatList
-          data={companies}
-          renderItem={({item}) => renderItem({item})}
-          numColumns={2}
-          keyExtractor={item => item.data.id}
-        />
+        {companies.length > 0 ? (
+          <FlatList
+            data={companies}
+            renderItem={({item}) => renderItem({item})}
+            numColumns={2}
+            keyExtractor={item => item.data.id}
+          />
+        ) : loading ? (
+          <Loading />
+        ) : (
+          <NoData />
+        )}
       </View>
     </SafeAreaView>
   );

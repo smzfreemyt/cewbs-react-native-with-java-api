@@ -13,27 +13,33 @@ import TopBar from '../../components/TopBar';
 import {Button} from 'react-native-paper';
 import axios from '../../axios';
 import colors from '../../utils/colors';
+import NoData from '../../components/NoData';
+import Loading from '../../components/Loading';
 
 const Services = ({navigation, route}) => {
   const company = route.params.data;
   const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get(`/api/companies/${company.data.id}/services`)
       .then(response => {
+        console.log('ax', loading);
         console.log(JSON.stringify(response.data, undefined, 4));
         let servicesData = response.data.content.map(data => {
           return {data: {...data}};
         });
         setServices(servicesData);
+        setLoading(false);
       })
       .catch(error => {
         if (error.response) {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
+        setLoading(false);
       });
-  }, [company.data.id]);
+  }, [company.data.id, loading]);
 
   const renderServices = ({item}) => {
     console.log(item);
@@ -69,8 +75,10 @@ const Services = ({navigation, route}) => {
             numColumns={2}
             keyExtractor={item => item.id}
           />
+        ) : loading ? (
+          <Loading />
         ) : (
-          <Text>No services</Text>
+          <NoData />
         )}
       </View>
     </View>
