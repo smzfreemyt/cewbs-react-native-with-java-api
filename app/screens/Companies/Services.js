@@ -1,24 +1,59 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Linking} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  Linking,
+  ToastAndroid,
+} from 'react-native';
 import TopBar from '../../components/TopBar';
-import { Button } from 'react-native-paper';
+import {Button} from 'react-native-paper';
+import axios from '../../axios';
+import colors from '../../utils/colors';
 
 const Services = ({navigation, route}) => {
-  const [company, setCompany] = useState(route.params.data);
+  const company = route.params.data;
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`/api/companies/${company.data.id}/services`)
+      .then(response => {
+        console.log(JSON.stringify(response.data, undefined, 4));
+        let servicesData = response.data.content.map(data => {
+          return {data: {...data}};
+        });
+        setServices(servicesData);
+      })
+      .catch(error => {
+        if (error.response) {
+          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+        }
+      });
+  }, [company.data.id]);
+
   const renderServices = ({item}) => {
+    console.log(item);
     return (
       <TouchableOpacity
         style={styles.yellowBox}
-        onPress={ ()=>{ Linking.openURL(item.description)}}
-        >
+        onPress={() => {
+          Linking.openURL(item.data.accessLink).catch(err => {
+            Promise.reject(err);
+            ToastAndroid.show('Could not open URL!', ToastAndroid.LONG);
+          });
+        }}>
         <View style={styles.companyItem}>
-          <Image source={{uri: item.logo}}
-          style={styles.serviceImage}/>
-          <Text style={styles.serviceName}>{item.name}</Text>
+          <Image source={{uri: item.data.logo}} style={styles.serviceImage} />
+          <Text style={styles.serviceName}>{item.data.name}</Text>
         </View>
       </TouchableOpacity>
     );
   };
+
   return (
     <View>
       <TopBar />
@@ -27,12 +62,16 @@ const Services = ({navigation, route}) => {
       </View>
       <Text style={styles.screenTitle}>{company.data.name}'s Services</Text>
       <View style={styles.container}>
-        <FlatList
-          data={company.data.services}
-          renderItem={({item}) => renderServices({item}, navigation.navigate)}
-          numColumns={2}
-          keyExtractor={item => item.id}
-        />
+        {services.length > 0 ? (
+          <FlatList
+            data={services}
+            renderItem={({item}) => renderServices({item}, navigation.navigate)}
+            numColumns={2}
+            keyExtractor={item => item.id}
+          />
+        ) : (
+          <Text>No services</Text>
+        )}
       </View>
     </View>
   );
@@ -63,7 +102,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   yellowBox: {
-    backgroundColor: '#FFFF00',
+    backgroundColor: colors.secondary,
     flexWrap: 'wrap',
     marginBottom: 20,
     width: '50%',
@@ -72,21 +111,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 5
+    padding: 5,
   },
   companyItem: {
     justifyContent: 'center',
     alignContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   serviceImage: {
     width: 100,
     height: 50,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   serviceName: {
     textAlign: 'center',
     alignSelf: 'center',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });

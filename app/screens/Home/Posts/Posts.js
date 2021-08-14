@@ -1,5 +1,12 @@
 import React, {useEffect} from 'react';
-import {Dimensions, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import PostItem from './PostItem';
 import {useDispatch, useSelector} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
@@ -12,14 +19,14 @@ const Posts = () => {
   const category = useSelector(state => state.post.category);
   const filterPosts = useSelector(state => state.post.filterPosts);
   useEffect(() => {
-    const subscriber = firestore()
-      .collection('posts')
-      .onSnapshot(documentSnapshot => {
-        let postData = documentSnapshot.docs.map(data => data.data());
-        dispatch(setPost(postData));
-        dispatch(filterPost(category));
-      });
-    return subscriber;
+    // const subscriber = firestore()
+    //   .collection('posts')
+    //   .onSnapshot(documentSnapshot => {
+    //     let postData = documentSnapshot.docs.map(data => data.data());
+    //     dispatch(setPost(postData));
+    //     dispatch(filterPost(category));
+    //   });
+    // return subscriber;
   }, [category, dispatch]);
 
   return (

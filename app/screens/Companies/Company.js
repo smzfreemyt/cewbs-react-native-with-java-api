@@ -7,12 +7,14 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import TopBar from '../../components/TopBar';
-import firestore from '@react-native-firebase/firestore';
+import colors from '../../utils/colors';
+import axios from '../../axios';
 
 const Company = ({navigation}) => {
-  const renderItem = ({item}, navigate) => {
+  const renderItem = ({item}) => {
     const navigateToServicesHandler = () => {
       navigation.navigate('Services', {
         data: item,
@@ -23,8 +25,7 @@ const Company = ({navigation}) => {
         style={styles.yellowBox}
         onPress={navigateToServicesHandler}>
         <View style={styles.companyItem}>
-          <Image source={{uri: item.data.image}}
-          style={styles.partnerImage}/>
+          <Image source={{uri: item.data.logo}} style={styles.partnerImage} />
           <Text style={styles.companyName}>{item.data.name}</Text>
         </View>
       </TouchableOpacity>
@@ -33,15 +34,20 @@ const Company = ({navigation}) => {
   const [companies, setCompanies] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firestore()
-      .collection('companies')
-      .onSnapshot(documentSnapshot => {
-        let companyData = documentSnapshot.docs.map(data => {
-          return {uid: data.id, data: data.data()};
+    axios
+      .get('/api/companies')
+      .then(response => {
+        console.log(JSON.stringify(response.data, undefined, 4));
+        let companyData = response.data.content.map(data => {
+          return {data: {...data}};
         });
         setCompanies(companyData);
+      })
+      .catch(error => {
+        if (error.response) {
+          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+        }
       });
-    return unsubscribe;
   }, []);
 
   return (
@@ -51,9 +57,9 @@ const Company = ({navigation}) => {
       <View style={styles.container}>
         <FlatList
           data={companies}
-          renderItem={({item}) => renderItem({item}, navigation.navigate)}
+          renderItem={({item}) => renderItem({item})}
           numColumns={2}
-          keyExtractor={item => item.uid}
+          keyExtractor={item => item.data.id}
         />
       </View>
     </SafeAreaView>
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   yellowBox: {
-    backgroundColor: '#FFFF00',
+    backgroundColor: colors.secondary,
     flexWrap: 'wrap',
     marginBottom: 20,
     width: '50%',
@@ -81,21 +87,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
-    padding: 5
+    padding: 5,
   },
   companyItem: {
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   partnerImage: {
     width: 100,
     height: 50,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   companyName: {
     textAlign: 'center',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default Company;
