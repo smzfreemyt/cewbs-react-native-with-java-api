@@ -23,10 +23,8 @@ const Services = ({navigation, route}) => {
 
   useEffect(() => {
     axios
-      .get(`/api/companies/${company.data.id}/services`)
+      .get(`/companies/${company.data.id}/services`)
       .then(response => {
-        console.log('ax', loading);
-        console.log(JSON.stringify(response.data, undefined, 4));
         let servicesData = response.data.content.map(data => {
           return {data: {...data}};
         });
@@ -42,7 +40,6 @@ const Services = ({navigation, route}) => {
   }, [company.data.id, loading]);
 
   const renderServices = ({item}) => {
-    console.log(item);
     return (
       <TouchableOpacity
         style={styles.yellowBox}

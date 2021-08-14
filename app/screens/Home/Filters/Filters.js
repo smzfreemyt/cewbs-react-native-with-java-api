@@ -1,28 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, ToastAndroid, View} from 'react-native';
 import FilterItem from './FilterItem';
-import firestore from '@react-native-firebase/firestore';
-import {useDispatch, useSelector} from 'react-redux';
+import axios from '../../../axios';
 
 const Filters = () => {
-  const dispatch = useDispatch();
-
   const [cats, setCats] = useState(['all']);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = firestore().collection('categories');
-        const data = await response.get();
-        data.docs.forEach(item => {
-          const catValue = item.data().category_name;
-          setCats(oldCats => [...oldCats, catValue]);
+    // const fetchCategories = async () => {
+    //   try {
+    //     const response = firestore().collection('categories');
+    //     const data = await response.get();
+    //     data.docs.forEach(item => {
+    //       const catValue = item.data().category_name;
+    //       setCats(oldCats => [...oldCats, catValue]);
+    //     });
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // };
+    // fetchCategories();
+    axios
+      .get('/categories')
+      .then(response => {
+        const categoriesData = response.data.content.map(data => {
+          return {...data};
         });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchCategories();
+        setCats(oldCats => [...oldCats, ...categoriesData]);
+      })
+      .catch(error => {
+        if (error.response) {
+          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+        }
+      });
   }, []);
 
   return (

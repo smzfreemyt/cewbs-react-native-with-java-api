@@ -9,16 +9,24 @@ import {
 } from 'react-native';
 import PostItem from './PostItem';
 import {useDispatch, useSelector} from 'react-redux';
-import firestore from '@react-native-firebase/firestore';
 import getRNDraftJSBlocks from 'react-native-draftjs-render';
 import {uid} from 'uid';
 import {setPost, filterPost} from '../../../stores/slices/postSlice';
+import axios from '../../../axios';
 
 const Posts = () => {
   const dispatch = useDispatch();
   const category = useSelector(state => state.post.category);
   const filterPosts = useSelector(state => state.post.filterPosts);
+
   useEffect(() => {
+    axios.get('/posts').then(response => {
+      let postData = response.data.content.map(data => {
+        return {...data};
+      });
+      dispatch(setPost(postData));
+      dispatch(filterPost(category));
+    });
     // const subscriber = firestore()
     //   .collection('posts')
     //   .onSnapshot(documentSnapshot => {
@@ -38,7 +46,7 @@ const Posts = () => {
           date={new Date(post.created_at)}
           category={post.category}>
           {getRNDraftJSBlocks({
-            contentState: post.body,
+            contentState: JSON.parse(post.body),
             customStyles: renderStyles,
             atomicHandler,
           })}

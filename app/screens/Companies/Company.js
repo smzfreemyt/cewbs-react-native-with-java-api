@@ -39,7 +39,7 @@ const Company = ({navigation}) => {
 
   useEffect(() => {
     axios
-      .get('/api/companies')
+      .get('/companies')
       .then(response => {
         console.log(JSON.stringify(response.data, undefined, 4));
         let companyData = response.data.content.map(data => {
