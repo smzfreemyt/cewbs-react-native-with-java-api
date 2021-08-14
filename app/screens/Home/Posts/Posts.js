@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   View,
 } from 'react-native';
 import PostItem from './PostItem';
@@ -13,20 +14,30 @@ import getRNDraftJSBlocks from 'react-native-draftjs-render';
 import {uid} from 'uid';
 import {setPost, filterPost} from '../../../stores/slices/postSlice';
 import axios from '../../../axios';
+import {setRefresh} from '../../../stores/slices/appSlice';
 
 const Posts = () => {
   const dispatch = useDispatch();
   const category = useSelector(state => state.post.category);
   const filterPosts = useSelector(state => state.post.filterPosts);
+  const refresh = useSelector(state => state.app.refresh);
 
   useEffect(() => {
-    axios.get('/posts').then(response => {
-      let postData = response.data.content.map(data => {
-        return {...data};
+    axios
+      .get('/posts')
+      .then(response => {
+        let postData = response.data.content.map(data => {
+          return {...data};
+        });
+        dispatch(setPost(postData));
+        dispatch(filterPost(category));
+        dispatch(setRefresh(false));
+      })
+      .catch(error => {
+        if (error.response) {
+          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+        }
       });
-      dispatch(setPost(postData));
-      dispatch(filterPost(category));
-    });
     // const subscriber = firestore()
     //   .collection('posts')
     //   .onSnapshot(documentSnapshot => {
@@ -35,7 +46,7 @@ const Posts = () => {
     //     dispatch(filterPost(category));
     //   });
     // return subscriber;
-  }, [category, dispatch]);
+  }, [category, dispatch, refresh]);
 
   return (
     <ScrollView style={styles.postContainer}>

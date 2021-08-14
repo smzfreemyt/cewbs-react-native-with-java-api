@@ -15,9 +15,15 @@ import axios from '../../axios';
 import colors from '../../utils/colors';
 import NoData from '../../components/NoData';
 import Loading from '../../components/Loading';
+import {useDispatch, useSelector} from 'react-redux';
+import {setRefresh} from '../../stores/slices/appSlice';
 
 const Services = ({navigation, route}) => {
   const company = route.params.data;
+
+  const dispatch = useDispatch();
+  const refresh = useSelector(state => state.app.refresh);
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -29,15 +35,17 @@ const Services = ({navigation, route}) => {
           return {data: {...data}};
         });
         setServices(servicesData);
-        setLoading(false);
       })
       .catch(error => {
         if (error.response) {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
+      })
+      .finally(() => {
         setLoading(false);
+        refresh && dispatch(setRefresh(false));
       });
-  }, [company.data.id, loading]);
+  }, [company.data.id, loading, refresh, dispatch]);
 
   const renderServices = ({item}) => {
     return (

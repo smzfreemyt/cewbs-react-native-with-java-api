@@ -14,8 +14,13 @@ import colors from '../../utils/colors';
 import axios from '../../axios';
 import Loading from '../../components/Loading';
 import NoData from '../../components/NoData';
+import {useDispatch, useSelector} from 'react-redux';
+import {setRefresh} from '../../stores/slices/appSlice';
 
 const Company = ({navigation}) => {
+  const dispatch = useDispatch();
+  const refresh = useSelector(state => state.app.refresh);
+
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,8 +56,12 @@ const Company = ({navigation}) => {
         if (error.response) {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
+      })
+      .finally(() => {
+        setLoading(false);
+        refresh && dispatch(setRefresh(false));
       });
-  }, []);
+  }, [dispatch, refresh]);
 
   return (
     <SafeAreaView>
