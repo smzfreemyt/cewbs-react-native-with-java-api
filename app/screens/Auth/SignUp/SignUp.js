@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import _auth from '../../../api/authService';
 import Loading from '../../../components/Loading';
 import {error, login} from '../../../stores/slices/authSlice';
+import colors from '../../../utils/colors';
 
 const SignUp = ({toggleLogin}) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const SignUp = ({toggleLogin}) => {
   const errorMessage = useSelector(state => state.auth.errorMessage);
 
   const registerHandler = async () => {
-    setLoading(true)
+    setLoading(true);
     if (email === '' || name === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
@@ -38,17 +39,17 @@ const SignUp = ({toggleLogin}) => {
         dispatch(error('There is problem in signing up!'));
       }
     }
-    setLoading(false)
+    setLoading(false);
   };
-  
+
   return loading ? (
     <Loading />
   ) : (
     <View style={styles.mainView}>
       <Image
-        source={require('../../../assets/Monstarlab_Logo_Yellow_PANTONE.png')}
+        source={require('../../../assets/Monstarlab-logo-yellow.png')}
         style={styles.image}
-        />
+      />
       <Text style={styles.title}>EMPLOYEE WELL-BEING SYSTEM</Text>
       <Text style={styles.label}>Full Name</Text>
       <TextInput
@@ -93,17 +94,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   mainView: {
-    backgroundColor: '#53575A',
+    backgroundColor: colors.primary,
     flex: 1,
     justifyContent: 'center',
   },
   signIn: {
-    color: 'black',
+    color: colors.black,
     alignSelf: 'center',
     fontSize: 18,
   },
   signInButton: {
-    backgroundColor: '#FFFF00',
+    backgroundColor: colors.secondary,
     width: '30%',
     height: 35,
     alignSelf: 'center',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'center',
-    color: 'white',
+    color: colors.white,
     fontWeight: 'bold',
     fontSize: 15,
     marginBottom: 70,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   label: {
     width: '90%',
     alignSelf: 'center',
-    color: 'white',
+    color: colors.white,
     fontSize: 20,
   },
   register: {
@@ -130,10 +131,10 @@ const styles = StyleSheet.create({
   },
   detail: {
     alignSelf: 'center',
-    color: 'white',
+    color: colors.white,
   },
   textInput: {
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     width: '90%',
     alignSelf: 'center',
     marginBottom: 20,

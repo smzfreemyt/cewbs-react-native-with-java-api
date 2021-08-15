@@ -11,6 +11,7 @@ import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
 import CompanyWrapper from '../Companies/CompanyWrapper';
 import {NavigationContainer} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -62,13 +63,15 @@ const HomeWrapper = () => {
           ),
         }}
         listeners={() => ({
-          tabPress: e => {
+          tabPress: async e => {
             e.preventDefault();
-            auth()
-              .signOut()
-              .then(() => {
-                dispatch(logout());
-              });
+            // auth()
+            //   .signOut()
+            //   .then(() => {
+            //     dispatch(logout());
+            //   });
+            dispatch(logout());
+            await AsyncStorage.removeItem('loginToken');
           },
         })}
       />
