@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   mainView: {
-    backgroundColor: '#53575A',
+    backgroundColor: colors.primary,
     flex: 1,
     justifyContent: 'center',
   },

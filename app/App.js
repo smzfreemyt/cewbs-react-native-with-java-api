@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,7 +7,6 @@ import colors from './utils/colors';
 import AuthWrapper from './screens/Auth/AuthWrapper';
 import jwtDecode from 'jwt-decode';
 import {logout} from './stores/slices/authSlice';
-import {ToastAndroid} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const theme = {
