@@ -4,11 +4,13 @@ import TopBar from '../../../components/TopBar';
 import { firebase } from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import {Picker} from '@react-native-picker/picker';
+import axios from '../../../axios';
 
 const HRRequest = () => {
   const user = useSelector(state => state.auth.currentUser);
 
   const [btnSubmitDisabled, setBtnSubmitDisabled] = useState(false);
+
   const [email, setEmail] = useState('');
   const [requestor, setRequestor] = useState('');
   const [department, setDepartment] = useState('');
@@ -23,8 +25,22 @@ const HRRequest = () => {
   const [coaEffectiveDate, setCoaEffectiveDate] = useState('');
 
   const submitHandler = async () => {
-
-    };
+      let data = {
+          email, requestor, department, classification, type, purpose, details, coaEmpName, coaCurrentApprover, coaProjectName, coaNewApproverApprover, coaEffectiveDate
+      };
+      console.log(data);
+      if (!handleValidation()) {
+           axios.post('/reports', {
+                ...data
+           }).then(() => {
+               console.log("Submitted successfully");
+           }).catch((e) => {
+               console.log("There is something wrong with the inputs!");
+           })
+      }else{
+          console.log("There is something");
+      }
+  };
 
   return (
     <ScrollView>
