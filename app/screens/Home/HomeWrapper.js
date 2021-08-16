@@ -6,6 +6,7 @@ import Home from './Home';
 import colors from '../../utils/colors';
 import Company from '../Companies/Company';
 import Profile from '../Profile/Profile';
+import HRRequest from '../Monstarlab/HRRequest/HRRequest';
 import {useDispatch} from 'react-redux';
 import {logout} from '../../stores/slices/authSlice';
 import auth from '@react-native-firebase/auth';
@@ -52,6 +53,16 @@ const HomeWrapper = () => {
           ),
         }}
       />
+      <Tab.Screen
+              name="Monstarlab"
+              component={HRRequest}
+              options={{
+                tabBarLabel: 'Monstarlab',
+                tabBarIcon: ({color}) => (
+                  <MaterialCommunityIcons name="account" color={color} size={26} />
+                ),
+              }}
+            />
       <Tab.Screen
         name="Logout"
         component={Home}
