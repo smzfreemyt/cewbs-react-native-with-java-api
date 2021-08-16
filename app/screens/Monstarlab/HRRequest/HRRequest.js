@@ -29,17 +29,13 @@ const HRRequest = () => {
           email, requestor, department, classification, type, purpose, details, coaEmpName, coaCurrentApprover, coaProjectName, coaNewApproverApprover, coaEffectiveDate
       };
       console.log(data);
-      if (!handleValidation()) {
-           axios.post('/reports', {
-                ...data
-           }).then(() => {
-               console.log("Submitted successfully");
-           }).catch((e) => {
-               console.log("There is something wrong with the inputs!");
-           })
-      }else{
-          console.log("There is something");
-      }
+       axios.post('/reports', {
+            ...data
+       }).then(() => {
+           console.log("Submitted successfully");
+       }).catch((e) => {
+           console.log("There is something wrong with the inputs!");
+       })
   };
 
   return (
