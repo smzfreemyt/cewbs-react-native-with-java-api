@@ -16,7 +16,6 @@ import {Picker} from '@react-native-picker/picker';
 import axios from '../../../axios';
 
 const HRRequest = () => {
-  const user = useSelector(state => state.auth.currentUser);
 
   const [btnSubmitDisabled, setBtnSubmitDisabled] = useState(false);
 
@@ -38,14 +37,13 @@ const HRRequest = () => {
           email, requestor, department, classification, type, purpose, details, coaEmpName, coaCurrentApprover, coaProjectName, coaNewApproverApprover, coaEffectiveDate
       };
       setBtnSubmitDisabled(true);
-      console.log(data);
        axios.post('/reports', {
             ...data
        }).then(() => {
            ToastAndroid.show("Request submitted successfully!", ToastAndroid.SHORT);
        }).catch(err => {
         if (err.response) {
-          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+          ToastAndroid.show(err.response.data.message, ToastAndroid.SHORT);
         }
       }).finally(() => {
         setBtnSubmitDisabled(false);

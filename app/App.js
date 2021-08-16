@@ -25,8 +25,6 @@ const App = () => {
 
   const validateToken = useCallback(async () => {
     const token = await AsyncStorage.getItem('loginToken');
-    const tokena = await AsyncStorage.getAllKeys();
-    console.log(tokena);
     if (token) {
       const {exp} = jwtDecode(token);
       if (Date.now() >= exp * 1000) {

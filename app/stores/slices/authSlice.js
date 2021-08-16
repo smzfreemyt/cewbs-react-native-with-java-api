@@ -17,7 +17,6 @@ const authSlice = createSlice({
       state.currentUser = {
         ...action.payload,
       };
-      console.log('loginn');
     },
     error: (state, action) => {
       state.errorMessage = action.payload;
@@ -27,7 +26,6 @@ const authSlice = createSlice({
       state.currentUser = null;
       state.errorMessage = '';
       state.token = '';
-      console.log('logout');
     },
     setToken: (state, action) => {
       state.token = action.payload;

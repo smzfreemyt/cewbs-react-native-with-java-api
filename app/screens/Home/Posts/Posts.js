@@ -38,7 +38,6 @@ const Posts = () => {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
       });
-    // console.log(filterPosts);
   }, [category, dispatch, refresh]);
 
   return (

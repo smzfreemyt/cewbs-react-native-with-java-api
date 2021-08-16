@@ -58,7 +58,7 @@ const HomeWrapper = () => {
         options={{
           tabBarLabel: 'Monstarlab',
           tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
+            <MaterialCommunityIcons name="domain" color={color} size={26} />
           ),
         }}
       />
