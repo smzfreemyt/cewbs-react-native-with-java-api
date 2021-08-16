@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, Image, View, TextInput, Modal, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, Image, View, TextInput, Modal, ScrollView, TouchableOpacity, ToastAndroid} from 'react-native';
 import TopBar from '../../../components/TopBar';
 import { firebase } from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
@@ -33,8 +33,7 @@ const HRRequest = () => {
        axios.post('/reports', {
             ...data
        }).then(() => {
-           console.log("Submitted successfully");
-           setBtnSubmitDisabled(false);
+           ToastAndroid.show("Request submitted successfully!", ToastAndroid.SHORT);
        }).catch(err => {
         if (err.response) {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
