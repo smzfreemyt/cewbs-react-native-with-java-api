@@ -9,13 +9,14 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {error, login} from '../../../stores/slices/authSlice';
+import {error, login, setToken} from '../../../stores/slices/authSlice';
 import {Colors} from 'react-native-paper';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import Loading from '../../../components/Loading';
 import colors from '../../../utils/colors';
 import axios from '../../../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {STORAGE_NAME} from '../../../config/AppConfig';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -38,11 +39,12 @@ const Login = ({toggleSignup}) => {
         })
         .then(async response => {
           console.log(response.data);
-          await AsyncStorage.setItem('loginToken', response.data.token);
+          await AsyncStorage.setItem(STORAGE_NAME, response.data.token);
           dispatch(
             login({
-              email,
+              ...response.data.user,
             }),
+            setToken(response.data.token),
           );
         })
         .catch(err => {

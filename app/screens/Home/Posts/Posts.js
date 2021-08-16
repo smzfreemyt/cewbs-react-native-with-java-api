@@ -4,7 +4,6 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  Text,
   ToastAndroid,
   View,
 } from 'react-native';

@@ -9,6 +9,7 @@ import {useDispatch} from 'react-redux';
 import {logout} from '../../stores/slices/authSlice';
 import CompanyWrapper from '../Companies/CompanyWrapper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {STORAGE_NAME} from '../../config/AppConfig';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -63,7 +64,7 @@ const HomeWrapper = () => {
           tabPress: async e => {
             e.preventDefault();
             dispatch(logout());
-            await AsyncStorage.removeItem('loginToken');
+            await AsyncStorage.removeItem(STORAGE_NAME);
           },
         })}
       />
