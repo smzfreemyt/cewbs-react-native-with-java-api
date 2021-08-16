@@ -28,14 +28,18 @@ const HRRequest = () => {
       let data = {
           email, requestor, department, classification, type, purpose, details, coaEmpName, coaCurrentApprover, coaProjectName, coaNewApproverApprover, coaEffectiveDate
       };
+      setBtnSubmitDisabled(true);
       console.log(data);
        axios.post('/reports', {
             ...data
        }).then(() => {
            console.log("Submitted successfully");
+           setBtnSubmitDisabled(false);
        }).catch((e) => {
            console.log("There is something wrong with the inputs!");
+           setBtnSubmitDisabled(false);
        })
+      
   };
 
   return (
