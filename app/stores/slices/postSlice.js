@@ -21,7 +21,7 @@ const postSlice = createSlice({
         state.filterPosts = state.posts;
       } else {
         state.filterPosts = state.posts.filter(
-          post => post.category === action.payload,
+          post => post.category.name === action.payload,
         );
       }
     },

@@ -7,24 +7,11 @@ const Filters = () => {
   const [cats, setCats] = useState(['all']);
 
   useEffect(() => {
-    // const fetchCategories = async () => {
-    //   try {
-    //     const response = firestore().collection('categories');
-    //     const data = await response.get();
-    //     data.docs.forEach(item => {
-    //       const catValue = item.data().category_name;
-    //       setCats(oldCats => [...oldCats, catValue]);
-    //     });
-    //   } catch (e) {
-    //     console.log(e);
-    //   }
-    // };
-    // fetchCategories();
     axios
       .get('/categories')
       .then(response => {
         const categoriesData = response.data.content.map(data => {
-          return {...data};
+          return data.name;
         });
         setCats(oldCats => [...oldCats, ...categoriesData]);
       })

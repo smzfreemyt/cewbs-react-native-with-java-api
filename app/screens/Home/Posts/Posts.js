@@ -4,6 +4,7 @@ import {
   Image,
   ScrollView,
   StyleSheet,
+  Text,
   ToastAndroid,
   View,
 } from 'react-native';
@@ -37,6 +38,7 @@ const Posts = () => {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
       });
+    // console.log(filterPosts);
   }, [category, dispatch, refresh]);
 
   return (
@@ -45,8 +47,8 @@ const Posts = () => {
         <PostItem
           key={uid()}
           title={post.title}
-          date={new Date(post.created_at)}
-          category={post.category}>
+          date={new Date(post.date_created)}
+          category={post.category.name}>
           {getRNDraftJSBlocks({
             contentState: JSON.parse(post.body),
             customStyles: renderStyles,

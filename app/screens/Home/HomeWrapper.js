@@ -53,15 +53,15 @@ const HomeWrapper = () => {
         }}
       />
       <Tab.Screen
-              name="Monstarlab"
-              component={HRRequest}
-              options={{
-                tabBarLabel: 'Monstarlab',
-                tabBarIcon: ({color}) => (
-                  <MaterialCommunityIcons name="account" color={color} size={26} />
-                ),
-              }}
-            />
+        name="Monstarlab"
+        component={HRRequest}
+        options={{
+          tabBarLabel: 'Monstarlab',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Logout"
         component={Home}

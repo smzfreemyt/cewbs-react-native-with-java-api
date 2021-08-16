@@ -14,9 +14,9 @@ import {Colors} from 'react-native-paper';
 import GoogleAuth from '../GoogleAuth/GoogleAuth';
 import Loading from '../../../components/Loading';
 import colors from '../../../utils/colors';
-import axios from '../../../axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORAGE_NAME} from '../../../config/AppConfig';
+import axios from '../../../axios';
 
 const Login = ({toggleSignup}) => {
   const dispatch = useDispatch();
@@ -39,15 +39,15 @@ const Login = ({toggleSignup}) => {
         })
         .then(async response => {
           console.log(response.data);
-          await AsyncStorage.setItem(STORAGE_NAME, response.data.token);
           dispatch(
             login({
               ...response.data.user,
             }),
-            setToken(response.data.token),
           );
+          await AsyncStorage.setItem(STORAGE_NAME, response.data.token);
         })
         .catch(err => {
+          console.log(err);
           if (err.response) {
             ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
           }
@@ -100,7 +100,6 @@ const Login = ({toggleSignup}) => {
         <Text style={[styles.detail, styles.register]}>Register</Text>
       </TouchableOpacity>
 
-      
     </View>
   );
 };

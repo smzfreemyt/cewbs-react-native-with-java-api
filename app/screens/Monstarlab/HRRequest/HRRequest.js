@@ -1,7 +1,16 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, Image, View, TextInput, Modal, ScrollView, TouchableOpacity, ToastAndroid} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Image,
+  View,
+  TextInput,
+  Modal,
+  ScrollView,
+  TouchableOpacity,
+  ToastAndroid,
+} from 'react-native';
 import TopBar from '../../../components/TopBar';
-import { firebase } from '@react-native-firebase/auth';
 import {useSelector} from 'react-redux';
 import {Picker} from '@react-native-picker/picker';
 import axios from '../../../axios';
@@ -41,7 +50,6 @@ const HRRequest = () => {
       }).finally(() => {
         setBtnSubmitDisabled(false);
       });
-      
   };
 
   return (
@@ -51,29 +59,27 @@ const HRRequest = () => {
 
       <Text style={styles.label}>Email</Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setEmail}
-         value={email}
-         placeholder="Your email"
+        style={styles.textInput}
+        onChangeText={setEmail}
+        value={email}
+        placeholder="Your email"
       />
 
       <Text style={styles.label}>Requestor</Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setRequestor}
-         value={requestor}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setRequestor}
+        value={requestor}
+        placeholder="Your answer"
       />
 
       <Text style={styles.label}>Department</Text>
       <View style={styles.picker}>
         <Picker
-            selectedValue={department}
-            onValueChange={(itemValue, itemIndex) =>
-              setDepartment(itemValue)
-            }>
-            <Picker.Item label="Operations" value="Operations" />
-            <Picker.Item label="Support" value="Support" />
+          selectedValue={department}
+          onValueChange={(itemValue, itemIndex) => setDepartment(itemValue)}>
+          <Picker.Item label="Operations" value="Operations" />
+          <Picker.Item label="Support" value="Support" />
         </Picker>
       </View>
 
@@ -113,58 +119,68 @@ const HRRequest = () => {
 
       <Text style={styles.label}>Purpose of Request</Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setPurpose}
-         value={purpose}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setPurpose}
+        value={purpose}
+        placeholder="Your answer"
       />
 
       <Text style={styles.label}>Request Details</Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setDetails}
-         value={details}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setDetails}
+        value={details}
+        placeholder="Your answer"
       />
 
-      <Text style={styles.label}>Change of Approver - Name of Employee (For PM use ONLY)</Text>
+      <Text style={styles.label}>
+        Change of Approver - Name of Employee (For PM use ONLY)
+      </Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setCoaEmpName}
-         value={coaEmpName}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setCoaEmpName}
+        value={coaEmpName}
+        placeholder="Your answer"
       />
 
-      <Text style={styles.label}>Change of Approver - Current Approver (For PM use ONLY)</Text>
+      <Text style={styles.label}>
+        Change of Approver - Current Approver (For PM use ONLY)
+      </Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setCoaCurrentApprover}
-         value={coaCurrentApprover}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setCoaCurrentApprover}
+        value={coaCurrentApprover}
+        placeholder="Your answer"
       />
 
-      <Text style={styles.label}>Change of Approver - Project Name (For PM use ONLY)</Text>
+      <Text style={styles.label}>
+        Change of Approver - Project Name (For PM use ONLY)
+      </Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setCoaProjectName}
-         value={coaProjectName}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setCoaProjectName}
+        value={coaProjectName}
+        placeholder="Your answer"
       />
 
-      <Text style={styles.label}>Change of Approver - New Approver Approver (For PM use ONLY)</Text>
+      <Text style={styles.label}>
+        Change of Approver - New Approver Approver (For PM use ONLY)
+      </Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setCoaNewApproverApprover}
-         value={coaNewApproverApprover}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setCoaNewApproverApprover}
+        value={coaNewApproverApprover}
+        placeholder="Your answer"
       />
 
-      <Text style={styles.label}>Change of Approver - Effective Date (For PM use ONLY)</Text>
+      <Text style={styles.label}>
+        Change of Approver - Effective Date (For PM use ONLY)
+      </Text>
       <TextInput
-         style={styles.textInput}
-         onChangeText={setCoaEffectiveDate}
-         value={coaEffectiveDate}
-         placeholder="Your answer"
+        style={styles.textInput}
+        onChangeText={setCoaEffectiveDate}
+        value={coaEffectiveDate}
+        placeholder="Your answer"
       />
 
       <TouchableOpacity
@@ -175,7 +191,6 @@ const HRRequest = () => {
           {!btnSubmitDisabled ? 'Submit' : 'Please wait...'}
         </Text>
       </TouchableOpacity>
-
     </ScrollView>
   );
 };
@@ -183,53 +198,53 @@ const HRRequest = () => {
 export default HRRequest;
 
 const styles = StyleSheet.create({
-    title: {
-        alignSelf: 'center',
-        color: 'black',
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginBottom: 30,
-        marginTop: 30
-    },
-    label: {
-        width: '90%',
-        alignSelf: 'center',
-        color: 'black',
-        fontSize: 16,
-    },
-    textInput: {
-        backgroundColor: 'white',
-        width: '90%',
-        alignSelf: 'center',
-        marginBottom: 20,
-        paddingLeft: 5,
-    },
-    button: {
-        backgroundColor: '#FFFF00',
-        paddingHorizontal: 25,
-        paddingVertical: 7,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        marginBottom: 10,
-        width: '90%'
-    },
-    picker: {
-        alignSelf: 'center',
-        width: '90%',
-        backgroundColor: 'white',
-        marginBottom: 20
-    },
-    submit: {
-        color: 'black',
-        alignSelf: 'center',
-        fontSize: 18,
-      },
-    submitButton: {
-        backgroundColor: '#FFFF00',
-        paddingHorizontal: 25,
-        paddingVertical: 7,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        marginBottom: 10,
-    },
+  title: {
+    alignSelf: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 30,
+    marginTop: 30,
+  },
+  label: {
+    width: '90%',
+    alignSelf: 'center',
+    color: 'black',
+    fontSize: 16,
+  },
+  textInput: {
+    backgroundColor: 'white',
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    paddingLeft: 5,
+  },
+  button: {
+    backgroundColor: '#FFFF00',
+    paddingHorizontal: 25,
+    paddingVertical: 7,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+    width: '90%',
+  },
+  picker: {
+    alignSelf: 'center',
+    width: '90%',
+    backgroundColor: 'white',
+    marginBottom: 20,
+  },
+  submit: {
+    color: 'black',
+    alignSelf: 'center',
+    fontSize: 18,
+  },
+  submitButton: {
+    backgroundColor: '#FFFF00',
+    paddingHorizontal: 25,
+    paddingVertical: 7,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
 });
