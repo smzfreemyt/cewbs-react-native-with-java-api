@@ -100,7 +100,7 @@ const Login = ({toggleSignup}) => {
         <Text style={[styles.detail, styles.register]}>Register</Text>
       </TouchableOpacity>
 
-      <GoogleAuth />
+      
     </View>
   );
 };

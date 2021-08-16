@@ -13,9 +13,9 @@ const HRRequest = () => {
 
   const [email, setEmail] = useState('');
   const [requestor, setRequestor] = useState('');
-  const [department, setDepartment] = useState('');
-  const [classification, setClassification] = useState('');
-  const [type, setType] = useState('');
+  const [department, setDepartment] = useState('OPERATIONS');
+  const [classification, setClassification] = useState('DOCUMENT');
+  const [type, setType] = useState('DOCUMENT - COE');
   const [purpose, setPurpose] = useState('');
   const [details, setDetails] = useState('');
   const [coaEmpName, setCoaEmpName] = useState('');
@@ -35,10 +35,13 @@ const HRRequest = () => {
        }).then(() => {
            console.log("Submitted successfully");
            setBtnSubmitDisabled(false);
-       }).catch((e) => {
-           console.log("There is something wrong with the inputs!");
-           setBtnSubmitDisabled(false);
-       })
+       }).catch(err => {
+        if (err.response) {
+          ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+        }
+      }).finally(() => {
+        setBtnSubmitDisabled(false);
+      });
       
   };
 
@@ -82,10 +85,10 @@ const HRRequest = () => {
               onValueChange={(itemValue, itemIndex) =>
                 setClassification(itemValue)
               }>
-              <Picker.Item label="Document" value="Document" />
-              <Picker.Item label="HRMS-Related" value="HRMS-Related" />
-              <Picker.Item label="Government Mandated Benefits-Related" value="Government Mandated Benefits-Related" />
-              <Picker.Item label="Weremote Co-working" value="Weremote Co-working" />
+              <Picker.Item label="Document" value="DOCUMENT" />
+              <Picker.Item label="HRMS-Related" value="HRMS-RELATED" />
+              <Picker.Item label="Government Mandated Benefits-Related" value="GOVERNMENT MANDATED BENEFITS-RELATED" />
+              <Picker.Item label="Weremote Co-working" value="WEREMOTE CO-WORKING" />
           </Picker>
       </View>
 
@@ -96,16 +99,16 @@ const HRRequest = () => {
             onValueChange={(itemValue, itemIndex) =>
               setType(itemValue)
             }>
-            <Picker.Item label="Document - COE" value="Document - COE" />
-            <Picker.Item label="Document - LOA" value="Document - LOA" />
-            <Picker.Item label="Personal Information Update" value="Personal Information Update" />
-            <Picker.Item label="HRMS - Change of Approver (For PM use ONLY Please proceed filling up section for Change of Approver)" value="HRMS - Change of Approver" />
+            <Picker.Item label="Document - COE" value="DOCUMENT - COE" />
+            <Picker.Item label="Document - LOA" value="DOCUMENT - LOA" />
+            <Picker.Item label="Personal Information Update" value="PERSONAL INFORMATION UPDATE" />
+            <Picker.Item label="HRMS - Change of Approver (For PM use ONLY Please proceed filling up section for Change of Approver)" value="HRMS - CHANGE OF APPROVER" />
             <Picker.Item label="HRMS - TDF" value="HRMS - TDF" />
-            <Picker.Item label="HRMS - Incorrect filing/Cancellation of leave" value="HRMS - Incorrect filing/Cancellation of leave" />
-            <Picker.Item label="Government Mandated Benefits - SSS" value="Government Mandated Benefits - SSS" />
-            <Picker.Item label="Government Mandated Benefits - PagIbig/HDMF" value="Government Mandated Benefits - PagIbig/HDMF" />
-            <Picker.Item label="Government Mandated Benefits - Philhealth" value="Government Mandated Benefits - Philhealth" />
-            <Picker.Item label="Co-working Weremote (Please indicate the schedule on Request Details)" value="Co-working Weremote" />
+            <Picker.Item label="HRMS - Incorrect filing/Cancellation of leave" value="HRMS - INCORRECT FILING/CANCELLATION OF LEAVE" />
+            <Picker.Item label="Government Mandated Benefits - SSS" value="GOVERNMENT MANDATED BENEFITS - SSS" />
+            <Picker.Item label="Government Mandated Benefits - PagIbig/HDMF" value="GOVERNMENT MANDATED BENEFITS - PAGIBIG/HDMF" />
+            <Picker.Item label="Government Mandated Benefits - Philhealth" value="GOVERNMENT MANDATED BENEFITS - PHILHEALTH" />
+            <Picker.Item label="Co-working Weremote (Please indicate the schedule on Request Details)" value="CO-WORKING WEREMOTE" />
          </Picker>
       </View>
 
