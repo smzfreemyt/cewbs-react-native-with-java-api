@@ -38,14 +38,6 @@ const Posts = () => {
           ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
         }
       });
-    // const subscriber = firestore()
-    //   .collection('posts')
-    //   .onSnapshot(documentSnapshot => {
-    //     let postData = documentSnapshot.docs.map(data => data.data());
-    //     dispatch(setPost(postData));
-    //     dispatch(filterPost(category));
-    //   });
-    // return subscriber;
   }, [category, dispatch, refresh]);
 
   return (
