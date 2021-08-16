@@ -38,7 +38,6 @@ const Login = ({toggleSignup}) => {
           password,
         })
         .then(async response => {
-          console.log(response.data);
           dispatch(
             login({
               ...response.data.user,
@@ -47,7 +46,6 @@ const Login = ({toggleSignup}) => {
           await AsyncStorage.setItem(STORAGE_NAME, response.data.token);
         })
         .catch(err => {
-          console.log(err);
           if (err.response) {
             ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
           }

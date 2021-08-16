@@ -2,16 +2,13 @@ import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
-  Image,
   View,
   TextInput,
-  Modal,
   ScrollView,
   TouchableOpacity,
   ToastAndroid,
 } from 'react-native';
 import TopBar from '../../../components/TopBar';
-import {useSelector} from 'react-redux';
 import {Picker} from '@react-native-picker/picker';
 import axios from '../../../axios';
 
