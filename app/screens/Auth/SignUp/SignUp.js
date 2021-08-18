@@ -29,7 +29,6 @@ const SignUp = ({toggleLogin}) => {
 
 
   const registerHandler = async () => {
-    setLoading(true);
     if (email === '' || name === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
@@ -53,7 +52,6 @@ const SignUp = ({toggleLogin}) => {
           setLoading(false);
         });
     }
-    setLoading(false);
   };
 
   return loading ? (
