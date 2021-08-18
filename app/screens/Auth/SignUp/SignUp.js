@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   Text,
+  ToastAndroid,
 } from 'react-native';
 import {Colors} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
@@ -13,31 +14,54 @@ import _auth from '../../../api/authService';
 import Loading from '../../../components/Loading';
 import {error, login} from '../../../stores/slices/authSlice';
 import colors from '../../../utils/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// import axios from '../../../axios';
+import {STORAGE_NAME, API_URL} from '../../../config/AppConfig';
+import axios from 'axios';
 
 const SignUp = ({toggleLogin}) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('sam@test.com');
+  const [name, setName] = useState('sam');
+  const [password, setPassword] = useState('test12345');
   const [loading, setLoading] = useState(false);
   const errorMessage = useSelector(state => state.auth.errorMessage);
+  const [btnSignupDisabled, setBtnSignupDisabled] = useState(false);
+
 
   const registerHandler = async () => {
     setLoading(true);
     if (email === '' || name === '' || password === '') {
       dispatch(error('Fields must not be empty'));
     } else {
-      const user = await _auth.signUpUsingEmailPassword(name, email, password);
-      if (user) {
-        dispatch(
-          login({
-            email: user.email,
-            uid: user.uid,
-          }),
-        );
-      } else {
-        dispatch(error('There is problem in signing up!'));
-      }
+      setLoading(true);
+      axios
+        .post(`${API_URL}/register`, {
+          name: name,
+          email: email,
+          password: password,
+        })
+        .then(async response => {
+          console.log('success');
+          // const { token } = response.data;
+          // dispatch(
+          //   login({
+          //     ...response.data.user,
+          //   }),
+          // );
+          // await AsyncStorage.setItem(STORAGE_NAME, token);
+        })
+        .catch(err => {
+          console.log('has error');
+          console.log(JSON.stringify(err));
+          if (err.response) {
+            ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+          }
+        })
+        .finally(() => {
+          setBtnSignupDisabled(false);
+          setLoading(false);
+        });
     }
     setLoading(false);
   };
@@ -75,7 +99,11 @@ const SignUp = ({toggleLogin}) => {
       />
       <Text style={styles.error}>{errorMessage}</Text>
 
-      <TouchableOpacity style={styles.signInButton} onPress={registerHandler}>
+      <TouchableOpacity
+        style={styles.signInButton}
+        onPress={registerHandler}
+        disabled={btnSignupDisabled}
+      >
         <Text style={styles.signIn}>Register</Text>
       </TouchableOpacity>
       <Text style={styles.detail}>Already have an account?</Text>
