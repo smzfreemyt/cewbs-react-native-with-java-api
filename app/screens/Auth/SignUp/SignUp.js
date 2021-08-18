@@ -40,14 +40,8 @@ const SignUp = ({toggleLogin}) => {
           email: email,
           password: password,
         })
-        .then(async response => {
-          const { token } = response.data;
-          dispatch(
-            login({
-              ...response.data.user,
-            }),
-          );
-          await AsyncStorage.setItem(STORAGE_NAME, token);
+        .then(response => {
+          ToastAndroid.show("Successfully registered!", ToastAndroid.BOTTOM);
         })
         .catch(err => {
           if (err.response) {
