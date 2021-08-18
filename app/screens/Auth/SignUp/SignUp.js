@@ -15,7 +15,6 @@ import Loading from '../../../components/Loading';
 import {error, login} from '../../../stores/slices/authSlice';
 import colors from '../../../utils/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import axios from '../../../axios';
 import {STORAGE_NAME, API_URL} from '../../../config/AppConfig';
 import axios from 'axios';
 
@@ -42,18 +41,15 @@ const SignUp = ({toggleLogin}) => {
           password: password,
         })
         .then(async response => {
-          console.log('success');
-          // const { token } = response.data;
-          // dispatch(
-          //   login({
-          //     ...response.data.user,
-          //   }),
-          // );
-          // await AsyncStorage.setItem(STORAGE_NAME, token);
+          const { token } = response.data;
+          dispatch(
+            login({
+              ...response.data.user,
+            }),
+          );
+          await AsyncStorage.setItem(STORAGE_NAME, token);
         })
         .catch(err => {
-          console.log('has error');
-          console.log(JSON.stringify(err));
           if (err.response) {
             ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
           }
