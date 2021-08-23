@@ -39,12 +39,13 @@ const SignUp = ({toggleLogin}) => {
           email: email,
           password: password,
         })
-        .then(response => {
-          ToastAndroid.show("Successfully registered!", ToastAndroid.BOTTOM);
+        .then(async response => {
+          ToastAndroid.show("Success!", ToastAndroid.SHORT);
+          toggleLogin()
         })
         .catch(err => {
           if (err.response) {
-            ToastAndroid.show(error.response.data.message, ToastAndroid.SHORT);
+            ToastAndroid.show(err.response.data.message, ToastAndroid.SHORT);
           }
         })
         .finally(() => {
